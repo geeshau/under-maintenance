@@ -69,7 +69,7 @@ export const projectDetails: ProjectDetails = {
   version: "v1.0.0",
   status: "Maintenance",
   alertText: "Scheduled Maintenance In Progress",
-  supportEmail: "support@pceastandrews.org",
+  supportEmail: "ict.team@pceastandrews.org",
   website: "accounts.pceastandrews.org",
 };
 
