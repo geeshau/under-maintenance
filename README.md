@@ -60,26 +60,19 @@ Everything user-facing lives in `src/data.ts`:
 4. Type-check:
    `npm run lint`
 
-### Changelog
+### Changelog — Last 10 Features
 
-The last 15 changes, newest first. They landed on 2026-10-20 across two commits
-(`d28b006` streamline into a single-viewport layout, `c522416` responsive redesign)
-plus the follow-up rebrand.
+Newest first.
 
-| # | Change | Files |
-| --- | --- | --- |
-| 15 | **Rebrand** — the multi-colour `STANDS` letters replaced with a monochrome "System Maintenance" wordmark and neutral wrench badge; page title, meta description and favicon realigned | `src/App.tsx`, `src/data.ts`, `index.html`, `public/favicon.svg` |
-| 14 | **Dead code pruned** — five unused keyframes (`float`, `pulse-ring`, `slide-x`, `bob`, `soft-pulse`) and the unused `AccentTokens.hex` field removed | `src/index.css`, `src/theme.ts` |
-| 13 | **Confetti ownership moved to `App`** — the countdown now calls `onCelebrate()` instead of firing its own burst, with a `celebrationFired` ref guard so it plays exactly once | `src/App.tsx`, `src/components/CountdownDisplay.tsx` |
-| 12 | **Completion state** — a "We're back online" headline, 100% progress, a green validation notice and a *Celebrate* button replace the countdown once the window closes | `src/data.ts`, `src/App.tsx`, `src/components/CountdownDisplay.tsx` |
-| 11 | **Height-based responsive tiers** — `max-height: 700px / 640px / 560px` breakpoints added, because width breakpoints never fire on landscape phones | `src/App.tsx`, `src/components/CountdownDisplay.tsx` |
-| 10 | **Viewport-proportional vertical rhythm** — fixed pixel spacing replaced with `dvh` + `clamp()` so the layout rescales with the viewport instead of overflowing | `src/App.tsx`, `src/components/CountdownDisplay.tsx`, `src/components/UpgradeProgress.tsx` |
-| 9 | **Countdown card compacted** — smaller header, tighter digit grid, and labels that drop out on short viewports | `src/components/CountdownDisplay.tsx` |
-| 8 | **Navbar countdown variant removed** — the header-embedded variant and its `navItems` export deleted | `src/components/CountdownDisplay.tsx`, `src/data.ts` |
-| 7 | **Progress tracker replaced** — the cartoon SVG steamroller scene was swapped for a compact horizontal 4-segment stepper | `src/components/UpgradeProgress.tsx` (new), `src/components/AnimatedWorkers.tsx` (deleted) |
-| 6 | **Single-viewport shell** — the root became `flex h-dvh overflow-hidden` and `main` became `flex-1 min-h-0 overflow-hidden`, removing page-level scrolling | `src/App.tsx` |
-| 5 | **Big footer replaced** — the multi-column footer became a slim one-line bar (website, version, support email, back-online date) | `src/App.tsx` |
-| 4 | **Support section removed** — the full-width contact section was dropped in favour of the slim footer bar | `src/App.tsx` |
-| 3 | **"What's new" section removed** — the `featureCards` export deleted with it | `src/App.tsx`, `src/data.ts` |
-| 2 | **"Live status" section removed** — the `status` section dropped in favour of the always-visible countdown card | `src/App.tsx`, `src/data.ts` |
-| 1 | **Rubik typography** — the font stack and the Google Fonts link now load Rubik (Gotham was rejected as not freely licensed) | `src/index.css`, `index.html` |
+| # | Feature | Commit | Details |
+| --- | --- | --- | --- |
+| 10 | **Rebrand to System Maintenance** | `d28b006` (current HEAD) | Swapped the multi-colour `STANDS` wordmark for a monochrome "System Maintenance" label + neutral wrench badge, updated title/meta description and favicon. |
+| 9 | **Single-viewport layout** | `d28b006` | Root switched to `h-dvh overflow-hidden`; page-level scrolling removed. Rhythmic spacing driven by `dvh` + `clamp()` with height-based tiers for landscape phones. |
+| 8 | **Compact upgrade stepper** | `d28b006` | Replaced the cartoon `AnimatedWorkers` SVG scene with a horizontal 4-segment `UpgradeProgress` tracker. |
+| 7 | **Slim footer bar** | `d28b006` | Multi-column footer condensed to a single-line bar showing website, version, support email and back-online date. |
+| 6 | **Sections trimmed down** | `d28b006` | Removed the live status block, "What's new" cards, and support section; kept only the countdown, stepper and status log. |
+| 5 | **Responsive Google-style redesign** | `c522416` | Full redesign with Google brand palette, Rubik typography, multi-section layout, animated workers, and status log modal. |
+| 4 | **Celebration confetti & banners** | `da4bdec` | Added confetti bursts on completion and a dismissible system banner. |
+| 3 | **Absolute date ranges for countdown** | `6f79d0e` | Countdown now tracks `startDate`/`targetDate` directly for accurate progress. |
+| 2 | **Maintenance log viewer & navbar variant** | `7e44de4` | Added the status log modal and a compact navbar variant of the countdown. |
+| 1 | **Configuration extracted to data store** | `8332520` | Moved copy, dates and log entries to `src/data.ts` for easier customisation. |
