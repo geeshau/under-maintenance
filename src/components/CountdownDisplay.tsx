@@ -12,6 +12,11 @@ interface CountdownDisplayProps {
   className?: string;
 }
 
+interface TimeUnit {
+  label: string;
+  value: string;
+}
+
 export default function CountdownDisplay({
   onTimeUp,
   onProgress,
@@ -22,10 +27,8 @@ export default function CountdownDisplay({
   const startTime = new Date(maintenanceConfig.startDate);
 
   const [timeLeft, setTimeLeft] = useState({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
     progress: 100,
+    differenceMs: 0,
   });
 
   const totalDurationMs = targetTime.getTime() - startTime.getTime();
@@ -43,7 +46,7 @@ export default function CountdownDisplay({
       const difference = targetTime.getTime() - now.getTime();
 
       if (difference <= 0) {
-        setTimeLeft({ hours: 0, minutes: 0, seconds: 0, progress: 0 });
+        setTimeLeft({ progress: 0, differenceMs: 0 });
         setIsCompleted(true);
 
         if (!completionReported.current) {
@@ -58,9 +61,6 @@ export default function CountdownDisplay({
 
       setIsCompleted(false);
       completionReported.current = false;
-      const hours = Math.floor(difference / (1000 * 60 * 60));
-      const minutes = Math.floor((difference / (1000 * 60)) % 60);
-      const seconds = Math.floor((difference / 1000) % 60);
 
       // Percentage of the maintenance window already elapsed
       const elapsed =
@@ -68,7 +68,7 @@ export default function CountdownDisplay({
           ? Math.max(0, Math.min(100, ((totalDurationMs - difference) / totalDurationMs) * 100))
           : 0;
 
-      setTimeLeft({ hours, minutes, seconds, progress: elapsed });
+      setTimeLeft({ progress: elapsed, differenceMs: difference });
       onProgress?.(elapsed, false);
     };
 
@@ -80,17 +80,79 @@ export default function CountdownDisplay({
   }, [onTimeUp, onProgress]);
 
   // Helper to pad numbers with leading zeros
-  const padZero = (num: number): string => num.toString().padStart(2, "0");
+  const padZero = (num: number): string => Math.max(0, Math.floor(num)).toString().padStart(2, "0");
 
   const accent = isCompleted ? "text-g-green" : "text-g-blue";
   const accentSoft = isCompleted ? "bg-surface-green" : "bg-surface-blue";
 
-  // Display labels
-  const timeUnits = [
-    { label: "Hours", value: padZero(timeLeft.hours) },
-    { label: "Minutes", value: padZero(timeLeft.minutes) },
-    { label: "Seconds", value: padZero(timeLeft.seconds) },
-  ];
+  // Compute display units: prefer days/weeks/months when > 24 hours remain
+  const getTimeUnits = (ms: number): TimeUnit[] => {
+    if (ms <= 0) {
+      return [
+        { label: "Hours", value: "00" },
+        { label: "Minutes", value: "00" },
+        { label: "Seconds", value: "00" },
+      ];
+    }
+
+    const totalSeconds = Math.floor(ms / 1000);
+    const seconds = totalSeconds % 60;
+    const totalMinutes = Math.floor(totalSeconds / 60);
+    const minutes = totalMinutes % 60;
+    const totalHours = Math.floor(totalMinutes / 60);
+    const hours = totalHours % 24;
+    const totalDays = Math.floor(totalHours / 24);
+
+    if (totalDays >= 365) {
+      const months = Math.floor(totalDays / 30.44);
+      const remainingDays = Math.floor(totalDays % 30.44);
+      if (remainingDays === 0) {
+        return [
+          { label: months === 1 ? "Month" : "Months", value: padZero(months) },
+        ];
+      }
+      return [
+        { label: months === 1 ? "Month" : "Months", value: padZero(months) },
+        { label: remainingDays === 1 ? "Day" : "Days", value: padZero(remainingDays) },
+      ];
+    }
+
+    if (totalDays >= 7) {
+      const weeks = Math.floor(totalDays / 7);
+      const remainingDays = totalDays % 7;
+      if (remainingDays === 0) {
+        return [
+          { label: weeks === 1 ? "Week" : "Weeks", value: padZero(weeks) },
+        ];
+      }
+      return [
+        { label: weeks === 1 ? "Week" : "Weeks", value: padZero(weeks) },
+        { label: remainingDays === 1 ? "Day" : "Days", value: padZero(remainingDays) },
+      ];
+    }
+
+    if (totalDays >= 1) {
+      if (hours === 0) {
+        return [
+          { label: totalDays === 1 ? "Day" : "Days", value: padZero(totalDays) },
+        ];
+      }
+      return [
+        { label: totalDays === 1 ? "Day" : "Days", value: padZero(totalDays) },
+        { label: "Hours", value: padZero(hours) },
+        { label: "Minutes", value: padZero(minutes) },
+      ];
+    }
+
+    // Less than 24 hours — show hours/minutes/seconds
+    return [
+      { label: "Hours", value: padZero(totalHours) },
+      { label: "Minutes", value: padZero(minutes) },
+      { label: "Seconds", value: padZero(seconds) },
+    ];
+  };
+
+  const timeUnits = getTimeUnits(timeLeft.differenceMs);
 
   return (
     <div
@@ -129,7 +191,13 @@ export default function CountdownDisplay({
       {/* Body */}
       <div className="flex min-h-0 flex-1 flex-col justify-center px-3.5 py-[clamp(0.375rem,1.6dvh,1.5rem)] sm:px-6 [@media(max-height:700px)]:px-3.5">
         {/* Countdown digits */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4">
+        <div className={`grid gap-2 sm:gap-3 md:gap-4 ${
+          timeUnits.length === 1
+            ? "grid-cols-1"
+            : timeUnits.length === 2
+              ? "grid-cols-2"
+              : "grid-cols-3"
+        }`}>
           {timeUnits.map((unit) => (
             <div
               key={unit.label}

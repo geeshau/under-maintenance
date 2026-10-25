@@ -82,8 +82,8 @@ export const systemBannerConfig: SystemBannerConfig = {
 };
 
 export const maintenanceConfig: MaintenanceConfig = {
-  startDate: "2026-06-27T00:00:00Z",
-  targetDate: "2026-07-10T00:00:00Z",
+  startDate: "2026-10-25T00:00:00Z",
+  targetDate: "2026-11-12T00:00:00Z",
   systemTitle: "Scheduled Maintenance",
   systemSubtitle: "Upgrading our systems to better serve you",
   systemDescription:
