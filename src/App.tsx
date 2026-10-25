@@ -230,10 +230,10 @@ export default function App() {
             {/* Actions */}
             <div className="mt-3.5 flex flex-wrap items-center gap-2 sm:mt-5 sm:gap-3 [@media(max-height:640px)]:mt-2 [@media(max-height:640px)]:flex-nowrap [@media(max-height:420px)]:mt-1.5">
               <a
-                href="#support"
+                href="https://cp.pceastandrews.org"
                 className="inline-flex items-center gap-1.5 rounded-full bg-g-blue px-4 py-2 text-[13px] font-medium text-white transition-all hover:bg-[#1a73e8] hover:shadow-float sm:px-6 sm:py-2.5 sm:text-sm [@media(max-height:420px)]:py-1.5"
               >
-                Contact support
+                STANDS Home
                 <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </a>
               <a
