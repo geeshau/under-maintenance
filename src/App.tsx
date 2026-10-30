@@ -198,22 +198,11 @@ export default function App() {
         <div className="grid min-h-0 flex-1 grid-cols-1 grid-rows-[auto_minmax(0,1fr)_auto] gap-3 [@media(max-height:640px)]:gap-2 [@media(max-height:560px)]:grid-cols-2 [@media(max-height:560px)]:grid-rows-[minmax(0,1fr)] md:grid-cols-2 md:grid-rows-[minmax(0,1fr)_auto] md:gap-4 lg:grid-cols-12 lg:gap-5">
           {/* ---------------- Hero copy ---------------- */}
           <div className="flex min-h-0 shrink-0 flex-col justify-center overflow-hidden md:col-span-1 md:row-start-1 lg:col-span-7 lg:row-start-1">
-            {/* Status pill */}
-            <div className="inline-flex w-fit items-center gap-2 self-start rounded-full border border-line bg-surface-alt px-2.5 py-1 [@media(max-height:640px)]:hidden">
-              <span className="relative flex h-1.5 w-1.5">
-                {isComplete ? (
-                  <span className="h-1.5 w-1.5 rounded-full bg-g-green" />
-                ) : (
-                  <>
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-g-blue opacity-75" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-g-blue" />
-                  </>
-                )}
-              </span>
-              <span className="text-[10px] font-medium text-ink-800 sm:text-xs">
-                {isComplete ? "System online" : projectDetails.alertText}
-              </span>
-            </div>
+            <img
+              src="/maintenance.svg"
+              alt="Maintenance illustration"
+              className="mb-3 h-24 w-24 shrink-0 sm:h-32 sm:w-32 [@media(max-height:640px)]:h-16 [@media(max-height:640px)]:w-16"
+            />
 
             <h1 className="mt-2.5 shrink-0 font-medium leading-[1.08] tracking-tight text-ink-900 text-[clamp(1.5rem,4.6dvh,3.75rem)] sm:mt-4 [@media(max-height:640px)]:mt-0 md:text-[clamp(2rem,4.6dvh,3.25rem)] lg:text-[clamp(2.5rem,5dvh,3.75rem)] xl:text-[clamp(3rem,5.2dvh,3.75rem)]">
               {isComplete ? statusMessage.completeTitle : statusMessage.title}

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Maintenance illustration">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4285f4"/>
+      <stop offset="100%" stop-color="#34a853"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="90" fill="#f1f3f4"/>
+  <g transform="translate(100 100)">
+    <circle r="52" fill="url(#g)" opacity="0.15"/>
+    <path d="M-18 -30 L18 -30 L28 -10 L28 30 L-28 30 L-28 -10 Z" fill="#4285f4"/>
+    <rect x="-10" y="-18" width="20" height="6" rx="3" fill="#fff"/>
+    <circle cx="0" cy="12" r="10" fill="#fff"/>
+    <path d="M0 6 L0 18 M-6 12 L6 12" stroke="#4285f4" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <g fill="#fbbc05">
+    <rect x="30" y="150" width="40" height="6" rx="3"/>
+    <rect x="130" y="150" width="40" height="6" rx="3"/>
+  </g>
+</svg>
