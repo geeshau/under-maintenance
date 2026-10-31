@@ -309,22 +309,22 @@ export default function App() {
           aria-label="System status log"
         >
           <div
-            className="flex max-h-[85vh] w-full max-w-xl flex-col overflow-hidden rounded-t-3xl bg-white shadow-modal sm:rounded-3xl"
+            className="flex max-h-[85vh] w-full max-w-xl flex-col overflow-hidden rounded-t-3xl bg-[#0b1220] shadow-modal sm:rounded-3xl"
             onClick={(event) => event.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-line px-5 py-4 sm:px-6 sm:py-5">
+            <div className="flex items-center justify-between border-b border-green-900/40 px-5 py-4 sm:px-6 sm:py-5">
               <div>
-                <h2 className="text-base font-medium text-ink-900 sm:text-lg">
-                  System log
+                <h2 className="text-base font-medium text-green-400 sm:text-lg font-mono">
+                  system.log
                 </h2>
-                <p className="mt-0.5 text-xs text-ink-400">
+                <p className="mt-0.5 text-xs text-green-700 font-mono">
                   Live feed of the maintenance pipeline
                 </p>
               </div>
               <button
                 onClick={() => setIsLogOpen(false)}
-                className="rounded-full p-2 text-ink-400 transition-colors hover:bg-surface-alt hover:text-ink-800"
+                className="rounded-full p-2 text-green-500 transition-colors hover:bg-green-900/30 hover:text-green-300"
                 aria-label="Close log"
               >
                 <X className="h-5 w-5" />
@@ -332,50 +332,35 @@ export default function App() {
             </div>
 
             {/* Body */}
-            <div className="flex-1 space-y-2.5 overflow-y-auto px-5 py-4 scrollbar-thin sm:space-y-3 sm:px-6 sm:py-5">
+            <div className="flex-1 space-y-1 overflow-y-auto bg-[#0b1220] px-5 py-4 font-mono text-xs text-green-400 scrollbar-thin sm:px-6 sm:py-5">
               {updateLogs.map((log) => {
                 const status = logStatusStyles[log.status] ?? logStatusStyles.QUEUED;
                 return (
-                  <div
-                    key={log.id}
-                    className="rounded-2xl border border-line p-3.5 transition-colors hover:bg-surface-alt sm:p-4"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span
-                            className={`h-2 w-2 shrink-0 rounded-full ${status.dot}`}
-                          />
-                          <h3 className="text-sm font-medium text-ink-900">
-                            {log.component}
-                          </h3>
-                          <span
-                            className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${status.chip}`}
-                          >
-                            {status.label}
-                          </span>
-                        </div>
-                        <p className="mt-1.5 text-xs leading-relaxed text-ink-600 sm:text-sm">
-                          {log.description}
-                        </p>
-                      </div>
-                      <time className="shrink-0 font-mono text-[11px] text-ink-400 sm:text-xs">
-                        {log.timestamp}
-                      </time>
+                  <div key={log.id} className="flex items-start gap-2 leading-relaxed">
+                    <span className="shrink-0 text-green-600">$</span>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-green-300">[{log.timestamp}]</span>{" "}
+                      <span className="text-blue-400">{log.component}</span>{" "}
+                      <span className="text-yellow-400">{status.label}</span>
+                      <p className="mt-0.5 text-green-200/90">{log.description}</p>
                     </div>
                   </div>
                 );
               })}
+              <div className="flex items-center gap-2 text-green-500">
+                <span>$</span>
+                <span className="animate-pulse">_</span>
+              </div>
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between border-t border-line px-5 py-3 sm:px-6 sm:py-4">
-              <span className="text-xs text-ink-400">
+            <div className="flex items-center justify-between border-t border-green-900/40 px-5 py-3 sm:px-6 sm:py-4">
+              <span className="text-xs text-green-700 font-mono">
                 Updated {new Date().toLocaleTimeString()}
               </span>
               <button
                 onClick={() => setIsLogOpen(false)}
-                className="rounded-full bg-ink-900 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-ink-800"
+                className="rounded-full bg-green-600 px-5 py-2 text-sm font-medium text-black transition-colors hover:bg-green-500 font-mono"
               >
                 Close
               </button>
